@@ -252,19 +252,27 @@ class AI:
 
     def calculateb(self,gametiles):
         value=0
+        totalwhite = 0
+        kingpos = [0,0]
         for x in range(8):
             for y in range(8):
                     if gametiles[y][x].pieceonTile.tostring()=='P':
                         value=value-100
-
+                        value += -1*y*7
                     if gametiles[y][x].pieceonTile.tostring()=='N':
                         value=value-350
+                        if y==0:
+                            value+= -30
 
                     if gametiles[y][x].pieceonTile.tostring()=='B':
                         value=value-350
+                        if y==0:
+                            value+= -30
 
                     if gametiles[y][x].pieceonTile.tostring()=='R':
                         value=value-525
+                        if y==0 and x==0:
+                            value+= -30
 
                     if gametiles[y][x].pieceonTile.tostring()=='Q':
                         value=value-1000
@@ -273,23 +281,31 @@ class AI:
                         value=value-10000
 
                     if gametiles[y][x].pieceonTile.tostring()=='p':
+                        totalwhite += 100
                         value=value+100
-
+                        
                     if gametiles[y][x].pieceonTile.tostring()=='n':
+                        totalwhite += 350
                         value=value+350
 
                     if gametiles[y][x].pieceonTile.tostring()=='b':
                         value=value+350
+                        totalwhite+=350
 
                     if gametiles[y][x].pieceonTile.tostring()=='r':
                         value=value+525
+                        totalwhite+=525
 
                     if gametiles[y][x].pieceonTile.tostring()=='q':
                         value=value+1000
+                        totalwhite+=1000
 
                     if gametiles[y][x].pieceonTile.tostring()=='k':
                         value=value+10000
-
+                        kingpos = [x,y]
+                    if totalwhite < 200:
+                        if kingpos[0] == 0 or kingpos[1] == 0 or kingpos[0] == 7 or kingpos[1] == 7:
+                            value += -700
         return value
 
 
